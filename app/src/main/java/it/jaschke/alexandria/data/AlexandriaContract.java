@@ -13,7 +13,7 @@ public class AlexandriaContract{
 
         public static final String TITLE = "title";
 
-        public static final String IMAGE_URL = "ean";
+        public static final String IMAGE_URL = "imgurl";
 
 
 
