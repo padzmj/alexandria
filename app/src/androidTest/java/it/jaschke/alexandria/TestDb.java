@@ -5,6 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 
+import java.util.Map;
+import java.util.Set;
+
 import it.jaschke.alexandria.data.AlexandriaContract;
 import it.jaschke.alexandria.data.DbHelper;
 
@@ -57,25 +60,7 @@ public class TestDb extends AndroidTestCase {
                 null // sort order
         );
 
-        if (cursor.moveToFirst()) {
-            int idIndex = cursor.getColumnIndex(AlexandriaContract.BookEntry._ID);
-            long id = cursor.getLong(idIndex);
-
-            int titleIndex = cursor.getColumnIndex(AlexandriaContract.BookEntry.TITLE);
-            String getTitle = cursor.getString(titleIndex);
-
-            int urlIndex = cursor.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL);
-            String url = cursor.getString(urlIndex);
-
-            assertEquals(title, getTitle);
-            assertEquals(id, ean);
-            assertEquals(url, imgUrl);
-
-        } else {
-            fail("No values returned :(");
-        }
-
-        // test author table
+        validateCursor(cursor,values);
 
         values = new ContentValues();
         values.put(AlexandriaContract.AuthorEntry._ID, ean);
@@ -99,20 +84,7 @@ public class TestDb extends AndroidTestCase {
                 null // sort order
         );
 
-        if (cursor.moveToFirst()) {
-            int idIndex = cursor.getColumnIndex(AlexandriaContract.AuthorEntry._ID);
-            long id = cursor.getLong(idIndex);
-
-            int authorIndex = cursor.getColumnIndex(AlexandriaContract.AuthorEntry.AUTHOR);
-            String getAuthor = cursor.getString(authorIndex);
-
-            assertEquals(author, getAuthor);
-            assertEquals(id, ean);
-
-        } else {
-            fail("No values returned :(");
-        }
-
+        validateCursor(cursor,values);
         // test category table
 
         values = new ContentValues();
@@ -137,20 +109,24 @@ public class TestDb extends AndroidTestCase {
                 null // sort order
         );
 
-        if (cursor.moveToFirst()) {
-            int idIndex = cursor.getColumnIndex(AlexandriaContract.CategoryEntry._ID);
-            long id = cursor.getLong(idIndex);
-
-            int catIndex = cursor.getColumnIndex(AlexandriaContract.CategoryEntry.CATEGORY);
-            String getCat = cursor.getString(catIndex);
-            assertEquals("categorie name",category, getCat);
-            assertEquals("categorie ean/id",id, ean);
-
-        } else {
-            fail("No values returned :(");
-        }
+        validateCursor(cursor,values);
 
         dbHelper.close();
 
+    }
+
+    static void validateCursor(Cursor valueCursor, ContentValues expectedValues) {
+
+        assertTrue(valueCursor.moveToFirst());
+
+        Set<Map.Entry<String, Object>> valueSet = expectedValues.valueSet();
+        for (Map.Entry<String, Object> entry : valueSet) {
+            String columnName = entry.getKey();
+            int idx = valueCursor.getColumnIndex(columnName);
+            assertFalse(idx == -1);
+            String expectedValue = entry.getValue().toString();
+            assertEquals(expectedValue, valueCursor.getString(idx));
+        }
+        valueCursor.close();
     }
 }
