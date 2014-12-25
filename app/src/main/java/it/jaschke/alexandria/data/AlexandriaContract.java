@@ -18,6 +18,7 @@ public class AlexandriaContract{
     public static final String PATH_AUTHORS = "authors";
     public static final String PATH_CATEGORIES = "categories";
 
+    public static final String PATH_BOOK_FULLDETAIL = "bookfull";
 
     public static final class BookEntry implements BaseColumns {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_BOOKS).build();
@@ -32,6 +33,10 @@ public class AlexandriaContract{
         public static final String TITLE = "title";
 
         public static final String IMAGE_URL = "imgurl";
+
+        public static final String SUBTITLE = "subtitle";
+
+        public static final String DESC = "description";
 
         public static Uri buildBookUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);

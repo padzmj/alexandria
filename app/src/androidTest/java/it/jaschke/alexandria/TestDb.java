@@ -27,10 +27,15 @@ public class TestDb extends AndroidTestCase {
 
     public void testInsertReadDb() {
         long ean =  9780137903955L;
-        String title = "Artificial Intelligence";
-        String author = "Stuart Jonathan Russell";
-        String imgUrl = "http://books.google.com/books/content?id=KI2WQgAACAAJ&printsec=frontcover&img=1&zoom=1";
-        String category = "Computers";
+        final String title = "Artificial Intelligence";
+        final String author = "Stuart Jonathan Russell";
+        final String imgUrl = "http://books.google.com/books/content?id=KI2WQgAACAAJ&printsec=frontcover&img=1&zoom=1";
+        final String category = "Computers";
+        final String subtitle = "A Modern Approach";
+        final String desc = "Presents a guide to artificial intelligence, covering such topics as intelligent agents, problem-solving, logical agents, planning, uncertainty, learning, and robotics.";
+
+
+
 
         DbHelper dbHelper = new DbHelper(mContext);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -39,6 +44,9 @@ public class TestDb extends AndroidTestCase {
         values.put(AlexandriaContract.BookEntry._ID, ean);
         values.put(AlexandriaContract.BookEntry.TITLE, title);
         values.put(AlexandriaContract.BookEntry.IMAGE_URL, imgUrl);
+        values.put(AlexandriaContract.BookEntry.SUBTITLE, subtitle);
+        values.put(AlexandriaContract.BookEntry.DESC, desc);
+
 
         long retEan = db.insert(AlexandriaContract.BookEntry.TABLE_NAME, null, values);
         assertEquals(ean, retEan);
@@ -46,7 +54,9 @@ public class TestDb extends AndroidTestCase {
         String[] columns = {
                 AlexandriaContract.BookEntry._ID,
                 AlexandriaContract.BookEntry.TITLE,
-                AlexandriaContract.BookEntry.IMAGE_URL
+                AlexandriaContract.BookEntry.IMAGE_URL,
+                AlexandriaContract.BookEntry.SUBTITLE,
+                AlexandriaContract.BookEntry.DESC
         };
 
         // A cursor is your primary interface to the query results.
@@ -67,7 +77,6 @@ public class TestDb extends AndroidTestCase {
         values.put(AlexandriaContract.AuthorEntry.AUTHOR, author);
 
         retEan = db.insert(AlexandriaContract.AuthorEntry.TABLE_NAME, null, values);
-        assertEquals(ean, retEan);
 
         columns = new String[]{
                 AlexandriaContract.AuthorEntry._ID,
@@ -92,7 +101,6 @@ public class TestDb extends AndroidTestCase {
         values.put(AlexandriaContract.CategoryEntry.CATEGORY, category);
 
         retEan = db.insert(AlexandriaContract.CategoryEntry.TABLE_NAME, null, values);
-        assertEquals(ean, retEan);
 
         columns = new String[]{
                 AlexandriaContract.CategoryEntry._ID,
