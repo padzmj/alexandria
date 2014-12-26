@@ -14,74 +14,57 @@ import it.jaschke.alexandria.data.DbHelper;
 public class TestProvider extends AndroidTestCase {
     public static final String LOG_TAG = TestProvider.class.getSimpleName();
 
-    public void testDeleteDb() throws Throwable {
-        mContext.deleteDatabase(DbHelper.DATABASE_NAME);
+    public void setUp() {
+        deleteAllRecords();
     }
 
-    public void testInsertReadProvider() {
-        DbHelper dbHelper = new DbHelper(mContext);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+    public void deleteAllRecords() {
+        mContext.getContentResolver().delete(
+                AlexandriaContract.BookEntry.CONTENT_URI,
+                null,
+                null
+        );
+        mContext.getContentResolver().delete(
+                AlexandriaContract.CategoryEntry.CONTENT_URI,
+                null,
+                null
+        );
 
-        long ean =  9780137903955L;
-        String title = "Artificial Intelligence";
-        String author = "Stuart Jonathan Russell";
-        String imgUrl = "http://books.google.com/books/content?id=KI2WQgAACAAJ&printsec=frontcover&img=1&zoom=1";
-        String category = "Computers";
-
-
-        // test book-query
-        ContentValues values = new ContentValues();
-        values.put(AlexandriaContract.BookEntry._ID, ean);
-        values.put(AlexandriaContract.BookEntry.TITLE, title);
-        values.put(AlexandriaContract.BookEntry.IMAGE_URL, imgUrl);
-
-        long retEan = db.insert(AlexandriaContract.BookEntry.TABLE_NAME, null, values);
-        assertEquals(ean, retEan);
+        mContext.getContentResolver().delete(
+                AlexandriaContract.AuthorEntry.CONTENT_URI,
+                null,
+                null
+        );
 
         Cursor cursor = mContext.getContentResolver().query(
                 AlexandriaContract.BookEntry.CONTENT_URI,
-                null, // leaving "columns" null just returns all the columns.
-                null, // cols for "where" clause
-                null, // values for "where" clause
-                null  // sort order
+                null,
+                null,
+                null,
+                null
         );
-
-        TestDb.validateCursor(cursor, values);
-
-        //test author query
-        values = new ContentValues();
-        values.put(AlexandriaContract.AuthorEntry._ID, ean);
-        values.put(AlexandriaContract.AuthorEntry.AUTHOR, author);
-
-        retEan = db.insert(AlexandriaContract.AuthorEntry.TABLE_NAME, null, values);
+        assertEquals(0, cursor.getCount());
+        cursor.close();
 
         cursor = mContext.getContentResolver().query(
                 AlexandriaContract.AuthorEntry.CONTENT_URI,
-                null, // leaving "columns" null just returns all the columns.
-                null, // cols for "where" clause
-                null, // values for "where" clause
-                null  // sort order
+                null,
+                null,
+                null,
+                null
         );
-
-        TestDb.validateCursor(cursor, values);
-
-        //test category query
-        values = new ContentValues();
-        values.put(AlexandriaContract.CategoryEntry._ID, ean);
-        values.put(AlexandriaContract.CategoryEntry.CATEGORY, category);
-
-        retEan = db.insert(AlexandriaContract.CategoryEntry.TABLE_NAME, null, values);
+        assertEquals(0, cursor.getCount());
+        cursor.close();
 
         cursor = mContext.getContentResolver().query(
                 AlexandriaContract.CategoryEntry.CONTENT_URI,
-                null, // leaving "columns" null just returns all the columns.
-                null, // cols for "where" clause
-                null, // values for "where" clause
-                null  // sort order
+                null,
+                null,
+                null,
+                null
         );
-
-        TestDb.validateCursor(cursor, values);
-
+        assertEquals(0, cursor.getCount());
+        cursor.close();
     }
 
     public void testGetType() {
@@ -95,6 +78,15 @@ public class TestProvider extends AndroidTestCase {
         type = mContext.getContentResolver().getType(AlexandriaContract.CategoryEntry.CONTENT_URI);
         assertEquals(AlexandriaContract.CategoryEntry.CONTENT_TYPE, type);
 
+        long id = 9780137903955L;
+        type = mContext.getContentResolver().getType(AlexandriaContract.BookEntry.buildBookUri(id));
+        assertEquals(AlexandriaContract.BookEntry.CONTENT_ITEM_TYPE, type);
+
+        type = mContext.getContentResolver().getType(AlexandriaContract.AuthorEntry.buildAuthorUri(id));
+        assertEquals(AlexandriaContract.AuthorEntry.CONTENT_ITEM_TYPE, type);
+
+        type = mContext.getContentResolver().getType(AlexandriaContract.CategoryEntry.buildCategoryUri(id));
+        assertEquals(AlexandriaContract.CategoryEntry.CONTENT_ITEM_TYPE, type);
 
     }
 }
