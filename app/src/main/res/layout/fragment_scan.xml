@@ -1,9 +1,25 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="it.jaschke.alexandria.Scan">
+    android:layout_height="match_parent" tools:context="it.jaschke.alexandria.AddBook">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/scan" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:minEms="@integer/ean_width"
+            android:id="@+id/ean"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/min_top_margin"
+            android:textIsSelectable="false"
+            android:maxLength="@integer/ean_size"
+            android:textAlignment="center"
+            android:hint="@string/input_hint"/>
+    </LinearLayout>
 </FrameLayout>

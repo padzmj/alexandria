@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity
                 nextFragment = new ListOfBooks();
                 break;
             case 1:
-                nextFragment = new Scan();
+                nextFragment = new AddBook();
                 break;
             case 2:
                 nextFragment = new About();
