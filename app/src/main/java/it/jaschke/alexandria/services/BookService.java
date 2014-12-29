@@ -158,7 +158,6 @@ public class BookService extends IntentService {
             writeBackAuthors(ean,bookInfo.getJSONArray(AUTHORS));
             if(bookInfo.has(CATEGORIES)){
                 writeBackCategories(ean,bookInfo.getJSONArray(CATEGORIES) );
-
             }
 
         } catch (JSONException e) {
