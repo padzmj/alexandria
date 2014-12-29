@@ -25,7 +25,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 AlexandriaContract.BookEntry.TITLE + " TEXT NOT NULL," +
                 AlexandriaContract.BookEntry.SUBTITLE + " TEXT ," +
                 AlexandriaContract.BookEntry.DESC + " TEXT ," +
-                AlexandriaContract.BookEntry.IMAGE_URL + " TEXT)";
+                AlexandriaContract.BookEntry.IMAGE_URL + " TEXT, " +
+                "UNIQUE ("+ AlexandriaContract.BookEntry._ID +") ON CONFLICT IGNORE)";
 
         final String SQL_CREATE_AUTHOR_TABLE = "CREATE TABLE " + AlexandriaContract.AuthorEntry.TABLE_NAME + " ("+
                 AlexandriaContract.AuthorEntry._ID + " INTEGER," +

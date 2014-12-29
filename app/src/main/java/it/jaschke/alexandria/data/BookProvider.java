@@ -259,6 +259,12 @@ public class BookProvider extends ContentProvider {
                 rowsDeleted = db.delete(
                         AlexandriaContract.CategoryEntry.TABLE_NAME, selection, selectionArgs);
                 break;
+            case BOOK_ID:
+                rowsDeleted = db.delete(
+                        AlexandriaContract.BookEntry.TABLE_NAME,
+                        AlexandriaContract.BookEntry._ID + " = '" + ContentUris.parseId(uri) + "'",
+                        selectionArgs);
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -287,6 +293,7 @@ public class BookProvider extends ContentProvider {
                 rowsUpdated = db.update(AlexandriaContract.CategoryEntry.TABLE_NAME, values, selection,
                         selectionArgs);
                 break;
+
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
