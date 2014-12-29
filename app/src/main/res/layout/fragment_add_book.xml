@@ -8,7 +8,7 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        >
+        android:layout_gravity="center_horizontal|top">
 
         <EditText
             android:layout_width="wrap_content"
@@ -40,9 +40,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/bookSubTitle"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_below="@+id/bookTitle"
             android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/authors"
+            android:gravity="right"
+            android:textSize="@dimen/small_fontsize"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/bookSubTitle"
+            android:layout_alignRight="@+id/ean"
+            android:layout_alignEnd="@+id/ean"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bookCover"
+            android:layout_alignTop="@+id/authors"
+            android:layout_alignLeft="@+id/ean"
+            android:layout_alignStart="@+id/ean"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/categories"
+            android:textSize="@dimen/small_fontsize"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/authors"
+            android:layout_alignLeft="@+id/authors"
+            android:layout_alignStart="@+id/authors"/>
 
 
     </RelativeLayout>

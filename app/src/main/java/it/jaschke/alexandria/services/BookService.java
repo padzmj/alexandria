@@ -145,14 +145,21 @@ public class BookService extends IntentService {
 
             String title = bookInfo.getString(TITLE);
             String subtitle = bookInfo.getString(SUBTITLE);
-            String desc = bookInfo.getString(DESC);
+            String desc="";
+            if(bookInfo.has(DESC)){
+                desc = bookInfo.getString(DESC);
+            }
+
             String imgUrl = bookInfo.getJSONObject(IMG_URL_PATH).getString(IMG_URL);
 
             deleteBook(ean);
 
             writeBackBook(ean, title, subtitle, desc, imgUrl);
             writeBackAuthors(ean,bookInfo.getJSONArray(AUTHORS));
-            writeBackCategories(ean,bookInfo.getJSONArray(CATEGORIES) );
+            if(bookInfo.has(CATEGORIES)){
+                writeBackCategories(ean,bookInfo.getJSONArray(CATEGORIES) );
+
+            }
 
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Error ", e);
