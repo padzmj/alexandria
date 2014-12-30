@@ -144,18 +144,28 @@ public class BookService extends IntentService {
             JSONObject bookInfo = ((JSONObject) bookArray.get(0)).getJSONObject(VOLUME_INFO);
 
             String title = bookInfo.getString(TITLE);
-            String subtitle = bookInfo.getString(SUBTITLE);
+
+            String subtitle = "";
+            if(bookInfo.has(SUBTITLE)) {
+                subtitle = bookInfo.getString(SUBTITLE);
+            }
+
             String desc="";
             if(bookInfo.has(DESC)){
                 desc = bookInfo.getString(DESC);
             }
 
-            String imgUrl = bookInfo.getJSONObject(IMG_URL_PATH).getString(IMG_URL);
+            String imgUrl = "";
+            if(bookInfo.has(IMG_URL_PATH) && bookInfo.getJSONObject(IMG_URL_PATH).has(IMG_URL)) {
+                imgUrl = bookInfo.getJSONObject(IMG_URL_PATH).getString(IMG_URL);
+            }
 
             deleteBook(ean);
-
             writeBackBook(ean, title, subtitle, desc, imgUrl);
-            writeBackAuthors(ean,bookInfo.getJSONArray(AUTHORS));
+
+            if(bookInfo.has(AUTHORS)) {
+                writeBackAuthors(ean, bookInfo.getJSONArray(AUTHORS));
+            }
             if(bookInfo.has(CATEGORIES)){
                 writeBackCategories(ean,bookInfo.getJSONArray(CATEGORIES) );
             }

@@ -10,25 +10,43 @@
         android:layout_height="fill_parent"
         android:layout_gravity="center_horizontal|top">
 
-        <EditText
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
+            android:id="@+id/eancontainer"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:minEms="@integer/ean_width"
-            android:id="@+id/ean"
-            android:layout_marginTop="39dp"
-            android:textIsSelectable="false"
-            android:maxLength="@integer/ean_size"
-            android:textAlignment="center"
-            android:hint="@string/input_hint"
+            android:layout_marginTop="40dp"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:minEms="@integer/ean_width"
+                android:id="@+id/ean"
+                android:textIsSelectable="false"
+                android:maxLength="@integer/ean_size"
+                android:textAlignment="center"
+                android:hint="@string/input_hint"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:paddingRight="20dp"/>
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="34dp"
+                android:src="@drawable/barcode"
+                android:id="@+id/scan_button"/>
+
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/bookTitle"
-            android:layout_below="@+id/ean"
+            android:layout_below="@+id/eancontainer"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:textSize="@dimen/head_line"
@@ -52,8 +70,8 @@
             android:textSize="@dimen/small_fontsize"
             android:layout_marginTop="20dp"
             android:layout_below="@+id/bookSubTitle"
-            android:layout_alignRight="@+id/ean"
-            android:layout_alignEnd="@+id/ean"
+            android:layout_alignRight="@+id/eancontainer"
+            android:layout_alignEnd="@+id/eancontainer"
             />
 
         <ImageView
@@ -61,8 +79,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/bookCover"
             android:layout_alignTop="@+id/authors"
-            android:layout_alignLeft="@+id/ean"
-            android:layout_alignStart="@+id/ean"/>
+            android:layout_alignLeft="@+id/eancontainer"
+            android:layout_alignStart="@+id/eancontainer"/>
 
         <TextView
             android:layout_width="wrap_content"
