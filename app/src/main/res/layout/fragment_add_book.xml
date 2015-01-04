@@ -24,11 +24,13 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:minEms="@integer/ean_width"
-                android:id="@+id/saj_ean"
+                android:id="@+id/ean"
                 android:saveEnabled="true"
                 android:textIsSelectable="false"
                 android:maxLength="@integer/ean_size"
                 android:hint="@string/input_hint"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:paddingRight="20dp"/>
 
             <Button
@@ -45,13 +47,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/bookTitle"
-            android:layout_below="@+id/eancontainer"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
             android:textSize="@dimen/head_line"
             android:textIsSelectable="true"
             android:textStyle="bold"
-            />
+            android:layout_below="@+id/eancontainer"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="31dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -95,25 +96,28 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="50dip"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true">
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:text="@string/ok_button"
+                android:visibility="invisible"
                 android:layout_weight="1"
                 android:id="@+id/save_button"
-                android:layout_gravity="left|bottom"/>
+                android:layout_gravity="bottom"/>
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:text="@string/cancel_button"
+                android:visibility="invisible"
                 android:layout_weight="1"
                 android:id="@+id/cancel_button"
-                android:layout_gravity="bottom"/>
+                />
 
         </LinearLayout>
 

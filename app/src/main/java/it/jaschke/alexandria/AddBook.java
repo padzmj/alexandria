@@ -54,7 +54,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         Log.d("my-tag","onCreateView");
 
         rootView = inflater.inflate(R.layout.fragment_add_book, container, false);
-        ean = (EditText) rootView.findViewById(R.id.saj_ean);
+        ean = (EditText) rootView.findViewById(R.id.ean);
 
         ean.addTextChangedListener(new TextWatcher() {
             @Override
@@ -70,13 +70,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length()<13){
-
-                    ((TextView) rootView.findViewById(R.id.bookTitle)).setText("");
-                    ((TextView) rootView.findViewById(R.id.bookSubTitle)).setText("");
-                    ((TextView) rootView.findViewById(R.id.authors)).setText("");
-                    ((TextView) rootView.findViewById(R.id.categories)).setText("");
-                    ((ImageView) rootView.findViewById(R.id.bookCover)).setImageResource(0);
-                    ((ImageView) rootView.findViewById(R.id.bookCover)).invalidate();
+                    clearInputs();
                     return;
                 }
                 Intent bookIntent = new Intent(getActivity(), BookService.class);
@@ -157,6 +151,15 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     }
 
+
+    private void clearInputs(){
+        ((TextView) rootView.findViewById(R.id.bookTitle)).setText("");
+        ((TextView) rootView.findViewById(R.id.bookSubTitle)).setText("");
+        ((TextView) rootView.findViewById(R.id.authors)).setText("");
+        ((TextView) rootView.findViewById(R.id.categories)).setText("");
+        ((ImageView) rootView.findViewById(R.id.bookCover)).setVisibility(View.INVISIBLE);
+    }
+
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
@@ -188,6 +191,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             ean.setText(scanResult.getContents());
         }
     }
+
 
 
 }
