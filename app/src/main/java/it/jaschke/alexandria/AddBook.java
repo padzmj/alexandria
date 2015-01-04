@@ -45,13 +45,13 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(EAN_CONTENT, ean.getText().toString());
+        if(ean!=null) {
+            outState.putString(EAN_CONTENT, ean.getText().toString());
+        }
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        Log.d("my-tag","onCreateView");
 
         rootView = inflater.inflate(R.layout.fragment_add_book, container, false);
         ean = (EditText) rootView.findViewById(R.id.ean);
@@ -144,6 +144,9 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
         String categories = data.getString(data.getColumnIndex(AlexandriaContract.CategoryEntry.CATEGORY));
         ((TextView) rootView.findViewById(R.id.categories)).setText(categories);
+
+        rootView.findViewById(R.id.save_button).setVisibility(View.VISIBLE);
+        rootView.findViewById(R.id.cancel_button).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -151,13 +154,14 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     }
 
-
     private void clearInputs(){
         ((TextView) rootView.findViewById(R.id.bookTitle)).setText("");
         ((TextView) rootView.findViewById(R.id.bookSubTitle)).setText("");
         ((TextView) rootView.findViewById(R.id.authors)).setText("");
         ((TextView) rootView.findViewById(R.id.categories)).setText("");
-        ((ImageView) rootView.findViewById(R.id.bookCover)).setVisibility(View.INVISIBLE);
+        rootView.findViewById(R.id.bookCover).setVisibility(View.INVISIBLE);
+        rootView.findViewById(R.id.save_button).setVisibility(View.INVISIBLE);
+        rootView.findViewById(R.id.cancel_button).setVisibility(View.INVISIBLE);
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -168,16 +172,16 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         }
 
         protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
+            String urlDisplay = urls[0];
+            Bitmap bookCover = null;
             try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
+                InputStream in = new java.net.URL(urlDisplay).openStream();
+                bookCover = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
-            return mIcon11;
+            return bookCover;
         }
 
         protected void onPostExecute(Bitmap result) {
