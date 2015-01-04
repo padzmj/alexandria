@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
@@ -72,6 +73,21 @@ public class BookService extends IntentService {
             return;
         }
 
+        Cursor testEntry = getContentResolver().query(
+                AlexandriaContract.BookEntry.buildBookUri(Long.parseLong(ean)),
+                null, // leaving "columns" null just returns all the columns.
+                null, // cols for "where" clause
+                null, // values for "where" clause
+                null  // sort order
+        );
+
+        if(testEntry.getCount()>0){
+            testEntry.close();
+            return;
+        }
+
+        testEntry.close();
+
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         String bookJsonString = null;
@@ -137,7 +153,6 @@ public class BookService extends IntentService {
         final String IMG_URL_PATH = "imageLinks";
         final String IMG_URL = "thumbnail";
 
-
         try {
             JSONObject bookJson = new JSONObject(bookJsonString);
             JSONArray bookArray = bookJson.getJSONArray(ITEMS);
@@ -160,7 +175,7 @@ public class BookService extends IntentService {
                 imgUrl = bookInfo.getJSONObject(IMG_URL_PATH).getString(IMG_URL);
             }
 
-            deleteBook(ean);
+//            deleteBook(ean);
             writeBackBook(ean, title, subtitle, desc, imgUrl);
 
             if(bookInfo.has(AUTHORS)) {
@@ -173,8 +188,6 @@ public class BookService extends IntentService {
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Error ", e);
         }
-
-
     }
 
     private void writeBackBook(String ean, String title, String subtitle, String desc, String imgUrl) {

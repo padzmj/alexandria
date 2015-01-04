@@ -12,6 +12,7 @@ import android.support.v4.content.CursorLoader;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,7 +141,10 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         ((TextView) rootView.findViewById(R.id.authors)).setText(authors.replace(",","\n"));
 
         String imgUrl = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
-        new DownloadImageTask((ImageView) rootView.findViewById(R.id.bookCover)).execute(imgUrl);
+        if(Patterns.WEB_URL.matcher(imgUrl).matches()){
+            new DownloadImageTask((ImageView) rootView.findViewById(R.id.bookCover)).execute(imgUrl);
+            rootView.findViewById(R.id.bookCover).setVisibility(View.VISIBLE);
+        }
 
         String categories = data.getString(data.getColumnIndex(AlexandriaContract.CategoryEntry.CATEGORY));
         ((TextView) rootView.findViewById(R.id.categories)).setText(categories);
