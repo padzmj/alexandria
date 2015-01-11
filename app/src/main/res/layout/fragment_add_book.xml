@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:id="@+id/eancontainer"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true">
 
@@ -38,7 +38,6 @@
                 android:text="@string/scan_button"
                 android:id="@+id/scan_button"/>
 
-
         </LinearLayout>
 
         <TextView
@@ -48,7 +47,7 @@
             android:textSize="@dimen/head_line"
             android:textIsSelectable="true"
             android:textStyle="bold"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="25dp"
             android:paddingRight="20dp"
             android:layout_below="@+id/eancontainer"
             android:layout_alignLeft="@+id/eancontainer"
@@ -60,7 +59,10 @@
             android:id="@+id/bookSubTitle"
             android:layout_marginTop="10dp"
             android:layout_below="@+id/bookTitle"
-            android:layout_centerHorizontal="true"/>
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:layout_alignLeft="@+id/eancontainer"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -121,10 +123,9 @@
                 android:id="@+id/save_button"
                 android:drawableLeft="@drawable/ic_action_accept"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_gravity="bottom"/>
+                android:layout_gravity="bottom"
+                />
 
         </LinearLayout>
-
     </RelativeLayout>
-
 </FrameLayout>

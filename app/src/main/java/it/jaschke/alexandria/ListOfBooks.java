@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,13 +45,11 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
 
         bookList = (ListView) rootView.findViewById(R.id.listOfBooks);
         bookList.setAdapter(bookListAdapter);
-        Log.d("my-tag", "onCreate");
         return rootView;
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Log.d("my-tag", "onCreateLoader");
         return new CursorLoader(
                 getActivity(),
                 AlexandriaContract.BookEntry.CONTENT_URI,
@@ -65,17 +62,14 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.d("my-tag", "onLoadFinished");
         bookListAdapter.swapCursor(data);
         if (position != ListView.INVALID_POSITION) {
             bookList.smoothScrollToPosition(position);
         }
-
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        Log.d("my-tag", "onLoaderReset");
         bookListAdapter.swapCursor(null);
     }
 }
