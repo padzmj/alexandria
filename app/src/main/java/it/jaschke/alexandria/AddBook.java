@@ -82,7 +82,33 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             }
         });
 
-        initButton((Button) rootView.findViewById(R.id.scan_button));
+        rootView.findViewById(R.id.scan_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scanIntent=new IntentIntegrator(AddBook.this);
+                scanIntent.initiateScan();
+            }
+        });
+
+        rootView.findViewById(R.id.save_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ean.setText("");
+            }
+        });
+
+        rootView.findViewById(R.id.cancel_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent bookIntent = new Intent(getActivity(), BookService.class);
+                bookIntent.putExtra(BookService.EAN, ean.getText().toString());
+                bookIntent.setAction(BookService.DELETE_BOOK);
+                getActivity().startService(bookIntent);
+                ean.setText("");
+            }
+        });
+
+
 
         if(savedInstanceState!=null){
             ean.setText(savedInstanceState.getString(EAN_CONTENT));
@@ -92,19 +118,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         return rootView;
     }
 
-    private void initButton(Button button) {
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                scanIntent=new IntentIntegrator(AddBook.this);
-                scanIntent.initiateScan();
-            }
-        });
-    }
-
     private void initLoader(){
-        getLoaderManager().initLoader(LOADER_ID, null, this);
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
     @Override
@@ -126,6 +141,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Override
     public void onLoadFinished(android.support.v4.content.Loader<Cursor> loader, Cursor data) {
         if (!data.moveToFirst()) {
+            Log.d("my-tag","!data.moveToFirst()");
             return;
         }
 

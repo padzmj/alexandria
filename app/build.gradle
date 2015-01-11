@@ -23,7 +23,7 @@ android {
 
     defaultConfig {
         applicationId "it.jaschke.alexandria"
-        minSdkVersion 16
+        minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
         versionName version

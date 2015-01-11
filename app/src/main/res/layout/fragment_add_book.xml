@@ -48,9 +48,11 @@
             android:textSize="@dimen/head_line"
             android:textIsSelectable="true"
             android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:paddingRight="20dp"
             android:layout_below="@+id/eancontainer"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="31dp"/>
+            android:layout_alignLeft="@+id/eancontainer"
+            android:layout_alignStart="@+id/eancontainer"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -86,10 +88,10 @@
             android:layout_height="wrap_content"
             android:id="@+id/categories"
             android:textSize="@dimen/small_fontsize"
+            android:layout_below="@+id/bookCover"
             android:layout_marginTop="20dp"
-            android:layout_below="@+id/authors"
-            android:layout_toRightOf="@+id/bookCover"
-            android:layout_toEndOf="@+id/bookCover"/>
+            android:layout_alignLeft="@+id/eancontainer"
+            android:layout_alignStart="@+id/eancontainer"/>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -103,10 +105,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/cancel_button"
-                android:visibility="invisible"
                 android:layout_weight="1"
                 style="?android:attr/buttonBarButtonStyle"
                 android:id="@+id/cancel_button"
+                android:drawableLeft="@drawable/ic_action_discard"
+                android:visibility="invisible"
                 />
 
             <Button
@@ -116,6 +119,7 @@
                 android:visibility="invisible"
                 android:layout_weight="1"
                 android:id="@+id/save_button"
+                android:drawableLeft="@drawable/ic_action_accept"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_gravity="bottom"/>
 

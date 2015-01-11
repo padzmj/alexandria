@@ -12,7 +12,7 @@
     <string name="input_hint">Insert ISBN-13. Digits only.</string>
     <string name="book_cover">Bookcover</string>
     <string name="about_land">about landscape</string>
-    <string name="ok_button">Done</string>
+    <string name="ok_button">Save</string>
     <string name="cancel_button">Cancel</string>
 
 

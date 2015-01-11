@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 /**
  * Created by saj on 24/12/14.
@@ -176,6 +177,7 @@ public class BookProvider extends ContentProvider {
         }
 
         retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+
         return retCursor;
     }
 
@@ -213,10 +215,12 @@ public class BookProvider extends ContentProvider {
         switch (match) {
             case BOOK: {
                 long _id = db.insert(AlexandriaContract.BookEntry.TABLE_NAME, null, values);
-                if ( _id > 0 )
+                if ( _id > 0 ){
                     returnUri = AlexandriaContract.BookEntry.buildBookUri(_id);
-                else
+                } else {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
+                }
+                getContext().getContentResolver().notifyChange(AlexandriaContract.BookEntry.buildFullBookUri(_id), null);
                 break;
             }
             case AUTHOR:{

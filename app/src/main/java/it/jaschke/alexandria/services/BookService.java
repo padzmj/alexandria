@@ -60,11 +60,13 @@ public class BookService extends IntentService {
      * parameters.
      */
     private void deleteBook(String ean) {
-        getContentResolver().delete(AlexandriaContract.BookEntry.buildBookUri(Long.parseLong(ean)),null,null);
+        if(ean!=null) {
+            getContentResolver().delete(AlexandriaContract.BookEntry.buildBookUri(Long.parseLong(ean)), null, null);
+        }
     }
 
     /**
-     * Handle action Baz in the provided background thread with the provided
+     * Handle action fetchBook in the provided background thread with the provided
      * parameters.
      */
     private void fetchBook(String ean) {
@@ -175,7 +177,6 @@ public class BookService extends IntentService {
                 imgUrl = bookInfo.getJSONObject(IMG_URL_PATH).getString(IMG_URL);
             }
 
-//            deleteBook(ean);
             writeBackBook(ean, title, subtitle, desc, imgUrl);
 
             if(bookInfo.has(AUTHORS)) {
@@ -197,9 +198,7 @@ public class BookService extends IntentService {
         values.put(AlexandriaContract.BookEntry.IMAGE_URL, imgUrl);
         values.put(AlexandriaContract.BookEntry.SUBTITLE, subtitle);
         values.put(AlexandriaContract.BookEntry.DESC, desc);
-
         getContentResolver().insert(AlexandriaContract.BookEntry.CONTENT_URI,values);
-
     }
 
     private void writeBackAuthors(String ean, JSONArray jsonArray) throws JSONException {
