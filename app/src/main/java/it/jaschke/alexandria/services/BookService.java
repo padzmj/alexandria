@@ -20,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import it.jaschke.alexandria.MainActivity;
+import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.data.AlexandriaContract;
 
 
@@ -162,7 +163,7 @@ public class BookService extends IntentService {
                 bookArray = bookJson.getJSONArray(ITEMS);
             }else{
                 Intent messageIntent = new Intent(MainActivity.MESSAGE_EVENT);
-                messageIntent.putExtra(MainActivity.MESSAGE_KEY,"NO BOOK FOUND");
+                messageIntent.putExtra(MainActivity.MESSAGE_KEY,getResources().getString(R.string.not_found));
                 LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(messageIntent);
                 return;
             }
