@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -18,6 +19,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import it.jaschke.alexandria.MainActivity;
 import it.jaschke.alexandria.data.AlexandriaContract;
 
 
@@ -155,7 +157,16 @@ public class BookService extends IntentService {
 
         try {
             JSONObject bookJson = new JSONObject(bookJsonString);
-            JSONArray bookArray = bookJson.getJSONArray(ITEMS);
+            JSONArray bookArray;
+            if(bookJson.has(ITEMS)){
+                bookArray = bookJson.getJSONArray(ITEMS);
+            }else{
+                Intent messageIntent = new Intent(MainActivity.MESSAGE_EVENT);
+                messageIntent.putExtra(MainActivity.MESSAGE_KEY,"NO BOOK FOUND");
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(messageIntent);
+                return;
+            }
+
             JSONObject bookInfo = ((JSONObject) bookArray.get(0)).getJSONObject(VOLUME_INFO);
 
             String title = bookInfo.getString(TITLE);
