@@ -27,8 +27,6 @@
                 android:textIsSelectable="false"
                 android:maxLength="@integer/ean_size"
                 android:hint="@string/input_hint"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
                 android:paddingRight="20dp"/>
 
             <Button
