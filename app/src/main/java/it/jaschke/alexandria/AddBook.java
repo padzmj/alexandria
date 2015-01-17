@@ -72,7 +72,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 bookIntent.putExtra(BookService.EAN, s.toString());
                 bookIntent.setAction(BookService.FETCH_BOOK);
                 getActivity().startService(bookIntent);
-                AddBook.this.initLoader();
+                AddBook.this.restartLoader();
             }
         });
 
@@ -110,7 +110,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         return rootView;
     }
 
-    private void initLoader(){
+    private void restartLoader(){
         getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
