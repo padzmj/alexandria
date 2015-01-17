@@ -6,9 +6,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import it.jaschke.alexandria.data.AlexandriaContract;
@@ -19,6 +21,12 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
     private BookListAdapter bookListAdapter;
     private ListView bookList;
     private int position = ListView.INVALID_POSITION;
+    private EditText searchText;
+
+    private final int LOADER_ID = 10;
+
+
+
 
     public ListOfBooks() {
     }
@@ -42,14 +50,44 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
 
         bookListAdapter = new BookListAdapter(getActivity(), cursor, 0);
         View rootView = inflater.inflate(R.layout.fragment_list_of_books, container, false);
+        searchText = (EditText) rootView.findViewById(R.id.searchText);
+        rootView.findViewById(R.id.searchButton).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d("my-tag","click");
+                        ListOfBooks.this.restartLoader();
+                    }
+                }
+        );
 
         bookList = (ListView) rootView.findViewById(R.id.listOfBooks);
         bookList.setAdapter(bookListAdapter);
         return rootView;
     }
 
+    private void restartLoader(){
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
+    }
+
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+        final String selection = AlexandriaContract.BookEntry.TITLE +" LIKE ? OR " + AlexandriaContract.BookEntry.SUBTITLE + " LIKE ? ";
+        String searchString =searchText.getText().toString();
+        
+        if(searchString.length()>0){
+            searchString = "%"+searchString+"%";
+            return new CursorLoader(
+                    getActivity(),
+                    AlexandriaContract.BookEntry.CONTENT_URI,
+                    null,
+                    selection,
+                    new String[]{searchString,searchString},
+                    null
+            );
+        }
+
         return new CursorLoader(
                 getActivity(),
                 AlexandriaContract.BookEntry.CONTENT_URI,
