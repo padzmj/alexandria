@@ -75,7 +75,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
 
         final String selection = AlexandriaContract.BookEntry.TITLE +" LIKE ? OR " + AlexandriaContract.BookEntry.SUBTITLE + " LIKE ? ";
         String searchString =searchText.getText().toString();
-        
+
         if(searchString.length()>0){
             searchString = "%"+searchString+"%";
             return new CursorLoader(

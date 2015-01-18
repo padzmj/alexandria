@@ -76,7 +76,7 @@ public class BookService extends IntentService {
             return;
         }
 
-        Cursor testEntry = getContentResolver().query(
+        Cursor bookEntry = getContentResolver().query(
                 AlexandriaContract.BookEntry.buildBookUri(Long.parseLong(ean)),
                 null, // leaving "columns" null just returns all the columns.
                 null, // cols for "where" clause
@@ -84,12 +84,12 @@ public class BookService extends IntentService {
                 null  // sort order
         );
 
-        if(testEntry.getCount()>0){
-            testEntry.close();
+        if(bookEntry.getCount()>0){
+            bookEntry.close();
             return;
         }
 
-        testEntry.close();
+        bookEntry.close();
 
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;

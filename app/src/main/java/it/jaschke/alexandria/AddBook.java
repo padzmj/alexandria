@@ -8,6 +8,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,12 +65,17 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length()<13){
-                    clearInputs();
+                String ean =s.toString();
+                //catch isbn10 numbers
+                if(ean.length()==10 && !ean.startsWith("978")){
+                    ean="978"+ean;
+                }
+                if(ean.length()<13){
+                    clearFields();
                     return;
                 }
                 Intent bookIntent = new Intent(getActivity(), BookService.class);
-                bookIntent.putExtra(BookService.EAN, s.toString());
+                bookIntent.putExtra(BookService.EAN, ean);
                 bookIntent.setAction(BookService.FETCH_BOOK);
                 getActivity().startService(bookIntent);
                 AddBook.this.restartLoader();
@@ -119,10 +125,13 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         if(ean.getText().length()==0){
             return null;
         }
-
+        String eanStr= ean.getText().toString();
+        if(eanStr.length()==10 && !eanStr.startsWith("978")){
+            eanStr="978"+eanStr;
+        }
         return new CursorLoader(
                 getActivity(),
-                AlexandriaContract.BookEntry.buildFullBookUri(Long.parseLong(ean.getText().toString())),
+                AlexandriaContract.BookEntry.buildFullBookUri(Long.parseLong(eanStr)),
                 null,
                 null,
                 null,
@@ -164,7 +173,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     }
 
-    private void clearInputs(){
+    private void clearFields(){
         ((TextView) rootView.findViewById(R.id.bookTitle)).setText("");
         ((TextView) rootView.findViewById(R.id.bookSubTitle)).setText("");
         ((TextView) rootView.findViewById(R.id.authors)).setText("");
@@ -180,7 +189,4 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             ean.setText(scanResult.getContents());
         }
     }
-
-
-
 }

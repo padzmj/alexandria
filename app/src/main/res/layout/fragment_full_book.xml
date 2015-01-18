@@ -1,0 +1,101 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="it.jaschke.alexandria.AddBook">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal|top">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bookTitle"
+            android:textSize="@dimen/head_line"
+            android:textIsSelectable="true"
+            android:textStyle="bold"
+            android:text="dkferkjgrthztöjhztäjzuä tjhgtroihjtzoihj"
+            android:paddingRight="20dp"
+
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_margin="10dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bookCover"
+            android:contentDescription="@string/book_cover"
+            android:src="@drawable/ic_action_discard"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/bookTitle"
+            android:layout_alignLeft="@+id/bookTitle"
+            android:layout_alignStart="@+id/bookTitle"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bookSubTitle"
+            android:text="dkferkjgrthztöjhztäjzuä tjhgtroihjtzoihj"
+            android:maxLines="5"
+            android:ellipsize="end"
+            android:layout_alignTop="@+id/bookCover"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="10dp"/>
+
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bookDesc"
+            android:text="dkferkjgrthztöjhztäjzuä tjhgtroihjtzoihj"
+            android:maxLines="7"
+            android:ellipsize="end"
+            android:layout_below="@+id/bookSubTitle"
+            android:layout_alignLeft="@+id/bookTitle"
+            android:layout_alignStart="@+id/bookTitle"
+            android:layout_marginTop="35dp"
+            android:layout_marginRight="10dp"/>
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/authors"-->
+        <!--android:text="dkferkjgrthztöjhztäjzuä tjhgtroihjtzoihj"-->
+
+        <!--android:gravity="end"-->
+        <!--android:textSize="@dimen/small_fontsize"-->
+        <!--android:layout_marginTop="20dp"-->
+
+        <!--/>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/categories"-->
+            <!--android:textSize="@dimen/small_fontsize"-->
+            <!--android:text="dkferkjgrthztöjhztäjzuä tjhgtroihjtzoihj"-->
+            <!--android:layout_above="@+id/cancel_button"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_marginBottom="159dp"/>-->
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_button"
+            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/cancel_button"
+            android:drawableLeft="@drawable/ic_action_discard"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+
+
+
+    </RelativeLayout>
+</FrameLayout>
