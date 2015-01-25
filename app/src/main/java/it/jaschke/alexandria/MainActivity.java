@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -31,7 +32,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence title;
-
+    public boolean isTablet = false;
     private BroadcastReceiver messageReciever;
 
     public static final String MESSAGE_EVENT = "MESSAGE_EVENT";
@@ -40,7 +41,12 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        isTablet = isTablet();
+        if(isTablet){
+            setContentView(R.layout.activity_main_tablet);
+        }else {
+            setContentView(R.layout.activity_main);
+        }
 
         messageReciever = new MessageReciever();
         IntentFilter filter = new IntentFilter(MESSAGE_EVENT);
@@ -146,8 +152,12 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         BookDetail fragment = new BookDetail();
         fragment.setArguments(args);
 
+        int id = R.id.container;
+        if(findViewById(R.id.right_container) != null){
+            id = R.id.right_container;
+        }
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, fragment)
+                .replace(id, fragment)
                 .addToBackStack("Book Detail")
                 .commit();
 
@@ -163,7 +173,12 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     }
 
     public void goBack(View view){
-        Log.d("my-tag","reached....");
         getSupportFragmentManager().popBackStack();
+    }
+
+    public boolean isTablet() {
+        return (getApplicationContext().getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 }
