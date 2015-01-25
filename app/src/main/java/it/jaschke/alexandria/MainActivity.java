@@ -12,7 +12,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +31,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence title;
-    public boolean isTablet = false;
+    public static boolean IS_TABLET = false;
     private BroadcastReceiver messageReciever;
 
     public static final String MESSAGE_EVENT = "MESSAGE_EVENT";
@@ -41,8 +40,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        isTablet = isTablet();
-        if(isTablet){
+        IS_TABLET = isTablet();
+        if(IS_TABLET){
             setContentView(R.layout.activity_main_tablet);
         }else {
             setContentView(R.layout.activity_main);
