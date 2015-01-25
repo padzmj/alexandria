@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import it.jaschke.alexandria.api.Callback;
@@ -147,6 +148,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment)
+                .addToBackStack("Book Detail")
                 .commit();
 
     }
@@ -158,5 +160,10 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 Toast.makeText(MainActivity.this, intent.getStringExtra(MESSAGE_KEY), Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    public void goBack(View view){
+        Log.d("my-tag","reached....");
+        getSupportFragmentManager().popBackStack();
     }
 }

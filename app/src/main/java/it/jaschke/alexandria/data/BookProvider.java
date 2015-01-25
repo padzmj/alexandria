@@ -37,10 +37,8 @@ public class BookProvider extends ContentProvider {
         bookFull = new SQLiteQueryBuilder();
         bookFull.setTables(
                 AlexandriaContract.BookEntry.TABLE_NAME + " LEFT OUTER JOIN " +
-                        AlexandriaContract.AuthorEntry.TABLE_NAME + " LEFT OUTER JOIN " +
-                        AlexandriaContract.CategoryEntry.TABLE_NAME);
-
-
+                AlexandriaContract.AuthorEntry.TABLE_NAME + " USING (" +AlexandriaContract.BookEntry._ID + ")" +
+                " LEFT OUTER JOIN " +  AlexandriaContract.CategoryEntry.TABLE_NAME + " USING (" +AlexandriaContract.BookEntry._ID + ")");
     }
 
 
