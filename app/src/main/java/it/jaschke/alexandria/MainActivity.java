@@ -16,8 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import it.jaschke.alexandria.api.Callback;
 
-public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, Callback {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -133,6 +135,20 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReciever);
         super.onDestroy();
+    }
+
+    @Override
+    public void onItemSelected(String ean) {
+        Bundle args = new Bundle();
+        args.putString(BookDetail.EAN_KEY, ean);
+
+        BookDetail fragment = new BookDetail();
+        fragment.setArguments(args);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+
     }
 
     private class MessageReciever extends BroadcastReceiver {

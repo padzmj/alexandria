@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import it.jaschke.alexandria.api.Callback;
 import it.jaschke.alexandria.data.AlexandriaContract;
 
 
@@ -24,9 +26,6 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
     private EditText searchText;
 
     private final int LOADER_ID = 10;
-
-
-
 
     public ListOfBooks() {
     }
@@ -63,6 +62,19 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
 
         bookList = (ListView) rootView.findViewById(R.id.listOfBooks);
         bookList.setAdapter(bookListAdapter);
+
+        bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Cursor cursor = bookListAdapter.getCursor();
+                if (cursor != null && cursor.moveToPosition(position)) {
+                    ((Callback)getActivity())
+                            .onItemSelected(cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry._ID)));
+                }
+            }
+        });
+
         return rootView;
     }
 
