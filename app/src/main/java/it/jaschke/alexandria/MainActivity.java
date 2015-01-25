@@ -64,7 +64,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     public void onNavigationDrawerItemSelected(int position) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-
         Fragment nextFragment;
 
         switch (position){
@@ -129,8 +128,12 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, new Settings())
+                    .addToBackStack("Settings")
+                    .commit();
+
             return true;
         }
 
