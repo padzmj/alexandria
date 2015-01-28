@@ -7,14 +7,14 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
         <ScrollView android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:fillViewport="false"
                     android:layout_weight="1">
 
             <RelativeLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|top">
 
                 <TextView
@@ -46,7 +46,7 @@
                     android:id="@+id/bookSubTitle"
                     android:maxLines="5"
                     android:ellipsize="end"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="10dp"
                     android:layout_alignTop="@+id/bookCover"
@@ -70,7 +70,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/bookDesc"
-
                     android:layout_marginTop="10dp"
                     android:padding="10dp">
 
@@ -78,8 +77,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/categories"
-                        android:layout_alignTop="@+id/authors"
-                        android:textAlignment="textEnd"
                         android:layout_weight="1"
                         android:gravity="left|top"/>
 

@@ -122,17 +122,8 @@ public class IntentIntegrator {
   private static final String BS_PACKAGE = "com.google.zxing.client.android";
   private static final String BSPLUS_PACKAGE = "com.srowen.bs.android";
 
-  // supported barcode formats
-  public static final Collection<String> PRODUCT_CODE_TYPES = list("UPC_A", "UPC_E", "EAN_8", "EAN_13", "RSS_14");
-  public static final Collection<String> ONE_D_CODE_TYPES =
-      list("UPC_A", "UPC_E", "EAN_8", "EAN_13", "CODE_39", "CODE_93", "CODE_128",
-           "ITF", "RSS_14", "RSS_EXPANDED");
-  public static final Collection<String> QR_CODE_TYPES = Collections.singleton("QR_CODE");
-  public static final Collection<String> DATA_MATRIX_TYPES = Collections.singleton("DATA_MATRIX");
-
   public static final Collection<String> ALL_CODE_TYPES = null;
   
-  public static final List<String> TARGET_BARCODE_SCANNER_ONLY = Collections.singletonList(BS_PACKAGE);
   public static final List<String> TARGET_ALL_KNOWN = list(
           BSPLUS_PACKAGE,             // Barcode Scanner+
           BSPLUS_PACKAGE + ".simple", // Barcode Scanner+ Simple
@@ -149,15 +140,6 @@ public class IntentIntegrator {
   private String buttonNo;
   private List<String> targetApplications;
   private final Map<String,Object> moreExtras = new HashMap<String,Object>(3);
-
-  /**
-   * @param activity {@link Activity} invoking the integration
-   */
-  public IntentIntegrator(Activity activity) {
-    this.activity = activity;
-    this.fragment = null;
-    initializeConfiguration();
-  }
 
   /**
    * @param fragment {@link Fragment} invoking the integration.
@@ -190,63 +172,11 @@ public class IntentIntegrator {
     title = activity.getString(titleID);
   }
 
-  public String getMessage() {
-    return message;
-  }
-
-  public void setMessage(String message) {
-    this.message = message;
-  }
-
-  public void setMessageByID(int messageID) {
-    message = activity.getString(messageID);
-  }
-
-  public String getButtonYes() {
-    return buttonYes;
-  }
-
-  public void setButtonYes(String buttonYes) {
-    this.buttonYes = buttonYes;
-  }
-
-  public void setButtonYesByID(int buttonYesID) {
-    buttonYes = activity.getString(buttonYesID);
-  }
-
-  public String getButtonNo() {
-    return buttonNo;
-  }
-
-  public void setButtonNo(String buttonNo) {
-    this.buttonNo = buttonNo;
-  }
-
-  public void setButtonNoByID(int buttonNoID) {
-    buttonNo = activity.getString(buttonNoID);
-  }
-  
-  public Collection<String> getTargetApplications() {
-    return targetApplications;
-  }
-  
   public final void setTargetApplications(List<String> targetApplications) {
     if (targetApplications.isEmpty()) {
       throw new IllegalArgumentException("No target applications");
     }
     this.targetApplications = targetApplications;
-  }
-  
-  public void setSingleTargetApplication(String targetApplication) {
-    this.targetApplications = Collections.singletonList(targetApplication);
-  }
-
-  public Map<String,?> getMoreExtras() {
-    return moreExtras;
-  }
-
-  public final void addExtra(String key, Object value) {
-    moreExtras.put(key, value);
   }
 
   /**
@@ -432,50 +362,6 @@ public class IntentIntegrator {
     }
     return null;
   }
-
-
-  /**
-   * Defaults to type "TEXT_TYPE".
-   *
-   * @param text the text string to encode as a barcode
-   * @return the {@link AlertDialog} that was shown to the user prompting them to download the app
-   *   if a prompt was needed, or null otherwise
-   * @see #shareText(CharSequence, CharSequence)
-   */
-  public final AlertDialog shareText(CharSequence text) {
-    return shareText(text, "TEXT_TYPE");
-  }
-
-  /**
-   * Shares the given text by encoding it as a barcode, such that another user can
-   * scan the text off the screen of the device.
-   *
-   * @param text the text string to encode as a barcode
-   * @param type type of data to encode. See {@code com.google.zxing.client.android.Contents.Type} constants.
-   * @return the {@link AlertDialog} that was shown to the user prompting them to download the app
-   *   if a prompt was needed, or null otherwise
-   */
-  public final AlertDialog shareText(CharSequence text, CharSequence type) {
-    Intent intent = new Intent();
-    intent.addCategory(Intent.CATEGORY_DEFAULT);
-    intent.setAction(BS_PACKAGE + ".ENCODE");
-    intent.putExtra("ENCODE_TYPE", type);
-    intent.putExtra("ENCODE_DATA", text);
-    String targetAppPackage = findTargetAppPackage(intent);
-    if (targetAppPackage == null) {
-      return showDownloadDialog();
-    }
-    intent.setPackage(targetAppPackage);
-    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-    attachMoreExtras(intent);
-    if (fragment == null) {
-      activity.startActivity(intent);
-    } else {
-      fragment.startActivity(intent);
-    }
-    return null;
-  }
   
   private static List<String> list(String... values) {
     return Collections.unmodifiableList(Arrays.asList(values));
@@ -503,5 +389,4 @@ public class IntentIntegrator {
       }
     }
   }
-
 }
