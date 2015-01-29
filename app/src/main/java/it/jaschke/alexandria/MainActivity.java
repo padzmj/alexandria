@@ -1,5 +1,6 @@
 package it.jaschke.alexandria;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -89,18 +90,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 .commit();
     }
 
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                title = getString(R.string.books);
-                break;
-            case 2:
-                title = getString(R.string.scan);
-                break;
-            case 3:
-                title = getString(R.string.about);
-                break;
-        }
+    public void setTitle(int titleId) {
+        title = getString(titleId);
     }
 
     public void restoreActionBar() {
@@ -190,4 +181,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         }
         super.onBackPressed();
     }
+
+
 }

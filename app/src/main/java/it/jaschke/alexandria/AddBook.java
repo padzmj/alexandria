@@ -1,5 +1,6 @@
 package it.jaschke.alexandria;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -187,5 +188,11 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         if(scanResult!=null){
             ean.setText(scanResult.getContents());
         }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        activity.setTitle(R.string.scan);
     }
 }
