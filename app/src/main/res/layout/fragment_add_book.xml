@@ -24,7 +24,6 @@
                 android:minEms="@integer/ean_width"
                 android:id="@+id/ean"
                 android:saveEnabled="true"
-                android:textIsSelectable="false"
                 android:maxLength="@integer/ean_size"
                 android:maxLines="1"
                 android:hint="@string/input_hint"
