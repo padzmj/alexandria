@@ -25,7 +25,7 @@ public class BookListAdapter extends CursorAdapter {
         public final TextView bookSubTitle;
 
         public ViewHolder(View view) {
-            bookCover = (ImageView) view.findViewById(R.id.bookCover);
+            bookCover = (ImageView) view.findViewById(R.id.fullBookCover);
             bookTitle = (TextView) view.findViewById(R.id.listBookTitle);
             bookSubTitle = (TextView) view.findViewById(R.id.listBookSubTitle);
         }

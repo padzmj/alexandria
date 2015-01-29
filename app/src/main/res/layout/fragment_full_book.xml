@@ -20,7 +20,7 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/bookTitle"
+                    android:id="@+id/fullBookTitle"
                     android:textSize="@dimen/head_line"
                     android:textIsSelectable="true"
                     android:textStyle="bold"
@@ -33,34 +33,34 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/bookCover"
+                    android:id="@+id/fullBookCover"
                     android:contentDescription="@string/book_cover"
                     android:layout_marginTop="15dp"
-                    android:layout_below="@+id/bookTitle"
-                    android:layout_alignLeft="@+id/bookTitle"
-                    android:layout_alignStart="@+id/bookTitle"/>
+                    android:layout_below="@+id/fullBookTitle"
+                    android:layout_alignLeft="@+id/fullBookTitle"
+                    android:layout_alignStart="@+id/fullBookTitle"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/bookSubTitle"
+                    android:id="@+id/fullBookSubTitle"
                     android:maxLines="5"
                     android:ellipsize="end"
                     android:textSize="18sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="10dp"
-                    android:layout_alignTop="@+id/bookCover"
-                    android:layout_toRightOf="@+id/bookCover"
-                    android:layout_toEndOf="@+id/bookCover"/>
+                    android:layout_alignTop="@+id/fullBookCover"
+                    android:layout_toRightOf="@+id/fullBookCover"
+                    android:layout_toEndOf="@+id/fullBookCover"/>
 
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/bookDesc"
+                    android:id="@+id/fullBookDesc"
                     android:ellipsize="end"
                     android:layout_marginLeft="10dp"
-                    android:layout_below="@+id/bookCover"
+                    android:layout_below="@+id/fullBookCover"
                     android:layout_margin="10dp"
                     />
 
@@ -69,7 +69,7 @@
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/bookDesc"
+                    android:layout_below="@+id/fullBookDesc"
                     android:layout_marginTop="10dp"
                     android:padding="10dp">
 
@@ -99,8 +99,8 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_gravity="right|top"
                     android:layout_alignParentTop="true"
-                    android:layout_alignRight="@+id/bookTitle"
-                    android:layout_alignEnd="@+id/bookTitle"/>
+                    android:layout_alignRight="@+id/fullBookTitle"
+                    android:layout_alignEnd="@+id/fullBookTitle"/>
 
 
             </RelativeLayout>
@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/delete"
                 style="?android:attr/buttonBarButtonStyle"
-                android:id="@+id/cancel_button"
+                android:id="@+id/delete_button"
                 android:drawableLeft="@drawable/ic_action_discard"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"/>
