@@ -4,6 +4,7 @@
                                         tools:context=".MainActivity">
     <LinearLayout
         android:orientation="horizontal"
+        android:baselineAligned="false"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 

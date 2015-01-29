@@ -92,7 +92,7 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="back"
+                    android:contentDescription="@string/back_button"
                     android:id="@+id/backButton"
                     android:onClick="goBack"
                     android:src="@drawable/ic_action_undo"
