@@ -26,6 +26,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 AlexandriaContract.BookEntry.SUBTITLE + " TEXT ," +
                 AlexandriaContract.BookEntry.DESC + " TEXT ," +
                 AlexandriaContract.BookEntry.IMAGE_URL + " TEXT, " +
+                AlexandriaContract.BookEntry.LANG + " TEXT, " +
                 "UNIQUE ("+ AlexandriaContract.BookEntry._ID +") ON CONFLICT IGNORE)";
 
         final String SQL_CREATE_AUTHOR_TABLE = "CREATE TABLE " + AlexandriaContract.AuthorEntry.TABLE_NAME + " ("+
@@ -40,10 +41,6 @@ public class DbHelper extends SQLiteOpenHelper {
                 " FOREIGN KEY (" + AlexandriaContract.CategoryEntry._ID + ") REFERENCES " +
                 AlexandriaContract.BookEntry.TABLE_NAME + " (" + AlexandriaContract.BookEntry._ID + "))";
 
-
-        Log.d("sql-statments",SQL_CREATE_BOOK_TABLE);
-        Log.d("sql-statments",SQL_CREATE_AUTHOR_TABLE);
-        Log.d("sql-statments",SQL_CREATE_CATEGORY_TABLE);
 
         db.execSQL(SQL_CREATE_BOOK_TABLE);
         db.execSQL(SQL_CREATE_AUTHOR_TABLE);
