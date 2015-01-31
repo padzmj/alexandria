@@ -155,6 +155,7 @@ public class BookService extends IntentService {
         final String CATEGORIES = "categories";
         final String IMG_URL_PATH = "imageLinks";
         final String IMG_URL = "thumbnail";
+        final String LANG = "language";
 
         try {
             JSONObject bookJson = new JSONObject(bookJsonString);
@@ -187,7 +188,12 @@ public class BookService extends IntentService {
                 imgUrl = bookInfo.getJSONObject(IMG_URL_PATH).getString(IMG_URL);
             }
 
-            writeBackBook(ean, title, subtitle, desc, imgUrl);
+            String lang="";
+            if(bookInfo.has(LANG)){
+                lang = bookInfo.getString(LANG);
+            }
+
+            writeBackBook(ean, title, subtitle, desc, imgUrl,lang);
 
             if(bookInfo.has(AUTHORS)) {
                 writeBackAuthors(ean, bookInfo.getJSONArray(AUTHORS));
@@ -201,13 +207,14 @@ public class BookService extends IntentService {
         }
     }
 
-    private void writeBackBook(String ean, String title, String subtitle, String desc, String imgUrl) {
+    private void writeBackBook(String ean, String title, String subtitle, String desc, String imgUrl, String lang) {
         ContentValues values= new ContentValues();
         values.put(AlexandriaContract.BookEntry._ID, ean);
         values.put(AlexandriaContract.BookEntry.TITLE, title);
         values.put(AlexandriaContract.BookEntry.IMAGE_URL, imgUrl);
         values.put(AlexandriaContract.BookEntry.SUBTITLE, subtitle);
         values.put(AlexandriaContract.BookEntry.DESC, desc);
+        values.put(AlexandriaContract.BookEntry.LANG, lang);
         getContentResolver().insert(AlexandriaContract.BookEntry.CONTENT_URI,values);
     }
 
