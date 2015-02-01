@@ -4,9 +4,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by saj on 11/01/15.
@@ -19,13 +22,19 @@ public class DownloadImage extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected Bitmap doInBackground(String... urls) {
-        String urlDisplay = urls[0];
+        URL imgUrl = null;
+        try {
+            imgUrl = new URL(urls[0]);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
         Bitmap bookCover = null;
         try {
-            InputStream in = new java.net.URL(urlDisplay).openStream();
+            InputStream in = imgUrl.openStream();
             bookCover = BitmapFactory.decodeStream(in);
         } catch (Exception e) {
-            Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
         return bookCover;
@@ -33,6 +42,7 @@ public class DownloadImage extends AsyncTask<String, Void, Bitmap> {
 
     protected void onPostExecute(Bitmap result) {
         bmImage.setImageBitmap(result);
+        bmImage.setVisibility(View.VISIBLE);
     }
 }
 
