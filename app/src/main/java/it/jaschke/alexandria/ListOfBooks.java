@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import android.widget.ListView;
 
 import it.jaschke.alexandria.api.BookListAdapter;
 import it.jaschke.alexandria.api.Callback;
-import it.jaschke.alexandria.api.FocusChange;
 import it.jaschke.alexandria.data.AlexandriaContract;
 
 
@@ -52,8 +52,6 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
         bookListAdapter = new BookListAdapter(getActivity(), cursor, 0);
         View rootView = inflater.inflate(R.layout.fragment_list_of_books, container, false);
         searchText = (EditText) rootView.findViewById(R.id.searchText);
-        searchText.setOnFocusChangeListener(new FocusChange(getActivity()));
-        
         rootView.findViewById(R.id.searchButton).setOnClickListener(
                 new View.OnClickListener() {
                     @Override

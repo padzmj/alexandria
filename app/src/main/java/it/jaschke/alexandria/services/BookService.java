@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -14,12 +13,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -39,8 +35,6 @@ public class BookService extends IntentService {
 
     public static final String FETCH_BOOK = "it.jaschke.alexandria.services.action.FETCH_BOOK";
     public static final String DELETE_BOOK = "it.jaschke.alexandria.services.action.DELETE_BOOK";
-
-    public static final int MIN_SPACE_REQUIERED = 1024*1024*100; //100MB in bytes
 
     public static final String EAN = "it.jaschke.alexandria.services.extra.EAN";
 
@@ -67,7 +61,7 @@ public class BookService extends IntentService {
      * parameters.
      */
     private void deleteBook(String ean) {
-        if(ean!=null && ean.length()>0) {
+        if(!ean.isEmpty()) {
             getContentResolver().delete(AlexandriaContract.BookEntry.buildBookUri(Long.parseLong(ean)), null, null);
         }
     }
@@ -161,7 +155,6 @@ public class BookService extends IntentService {
         final String CATEGORIES = "categories";
         final String IMG_URL_PATH = "imageLinks";
         final String IMG_URL = "thumbnail";
-        final String LANG = "language";
 
         try {
             JSONObject bookJson = new JSONObject(bookJsonString);
@@ -189,12 +182,12 @@ public class BookService extends IntentService {
                 desc = bookInfo.getString(DESC);
             }
 
-            String lang="";
-            if(bookInfo.has(LANG)){
-                lang = bookInfo.getString(LANG);
+            String imgUrl = "";
+            if(bookInfo.has(IMG_URL_PATH) && bookInfo.getJSONObject(IMG_URL_PATH).has(IMG_URL)) {
+                imgUrl = bookInfo.getJSONObject(IMG_URL_PATH).getString(IMG_URL);
             }
 
-            writeBackBook(ean, title, subtitle, desc,lang);
+            writeBackBook(ean, title, subtitle, desc, imgUrl);
 
             if(bookInfo.has(AUTHORS)) {
                 writeBackAuthors(ean, bookInfo.getJSONArray(AUTHORS));
@@ -203,61 +196,18 @@ public class BookService extends IntentService {
                 writeBackCategories(ean,bookInfo.getJSONArray(CATEGORIES) );
             }
 
-            if(bookInfo.has(IMG_URL_PATH) && bookInfo.getJSONObject(IMG_URL_PATH).has(IMG_URL)) {
-                copyImage(bookInfo.getJSONObject(IMG_URL_PATH).getString(IMG_URL),ean);
-            }
-
-        } catch (Exception e) {
+        } catch (JSONException e) {
             Log.e(LOG_TAG, "Error ", e);
         }
     }
 
-    private void copyImage(String url, String ean) throws IOException {
-        File folder = new File(Environment.getExternalStorageDirectory() + "/bookCover");
-        String targetUrl;
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
-
-        if(folder.getUsableSpace()<MIN_SPACE_REQUIERED){
-            targetUrl=url;
-        }else{
-            File localImage = new File(Environment.getExternalStorageDirectory() + "/bookCover",ean);
-            if (!localImage.exists()) {
-                localImage.createNewFile();
-            }
-            InputStream in = new java.net.URL(url).openStream();
-            OutputStream out = new FileOutputStream(localImage);
-
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-            in.close();
-            out.close();
-
-            targetUrl=localImage.toURI().toString();
-        }
-        ContentValues values= new ContentValues();
-        values.put(AlexandriaContract.BookEntry.IMAGE_URL, targetUrl);
-        values.put(AlexandriaContract.BookEntry._ID, ean);
-
-        final String selection = AlexandriaContract.BookEntry._ID +" = ? ";
-        getContentResolver().update(AlexandriaContract.BookEntry.CONTENT_URI,
-                values,
-                selection,
-                new String[]{ean});
-
-    }
-
-    private void writeBackBook(String ean, String title, String subtitle, String desc, String lang) {
+    private void writeBackBook(String ean, String title, String subtitle, String desc, String imgUrl) {
         ContentValues values= new ContentValues();
         values.put(AlexandriaContract.BookEntry._ID, ean);
         values.put(AlexandriaContract.BookEntry.TITLE, title);
+        values.put(AlexandriaContract.BookEntry.IMAGE_URL, imgUrl);
         values.put(AlexandriaContract.BookEntry.SUBTITLE, subtitle);
         values.put(AlexandriaContract.BookEntry.DESC, desc);
-        values.put(AlexandriaContract.BookEntry.LANG, lang);
         getContentResolver().insert(AlexandriaContract.BookEntry.CONTENT_URI,values);
     }
 

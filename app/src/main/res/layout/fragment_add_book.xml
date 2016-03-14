@@ -34,7 +34,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/scan_button"
                 android:id="@+id/scan_button"/>
-
         </LinearLayout>
 
         <TextView
@@ -124,5 +123,6 @@
                 />
 
         </LinearLayout>
+
     </RelativeLayout>
 </FrameLayout>

@@ -7,6 +7,7 @@ package it.jaschke.alexandria.data;
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 public class AlexandriaContract{
 
@@ -39,8 +40,6 @@ public class AlexandriaContract{
         public static final String SUBTITLE = "subtitle";
 
         public static final String DESC = "description";
-
-        public static final String LANG = "language";
 
         public static Uri buildBookUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);

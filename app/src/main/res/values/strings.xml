@@ -16,7 +16,7 @@
 
     <string name="ok_button">Next</string>
     <string name="cancel_button">Cancel</string>
-    <string name="not_found">No Book found</string>
+    <string name="not_found">No Book found!</string>
     <string name="search">Search</string>
     <string name="delete">Delete Book</string>
     <string name="pref_startScreen">Select Startscreen</string>
@@ -26,5 +26,6 @@
     <string name="share_text">A must read book: </string>
 
 <!-- TODO: Remove or change this placeholder text -->
-    <string name="about_text">About this App / Change if App ready for the Store</string>
+    <string name="about_text">This application gets book information from a Google API. All titles, cover images, and author information come from there.
+    The original version of this app was built by Sascha Jaschke, and a modified version is given to students in the Udacity Android Nanodegree program. </string>
 </resources>
