@@ -2,11 +2,15 @@ package it.jaschke.alexandria.services;
 
 import android.app.IntentService;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,14 +50,25 @@ public class BookService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
-            if (FETCH_BOOK.equals(action)) {
+            if (FETCH_BOOK.equals(action) && isConnected()) {
                 final String ean = intent.getStringExtra(EAN);
                 fetchBook(ean);
             } else if (DELETE_BOOK.equals(action)) {
                 final String ean = intent.getStringExtra(EAN);
                 deleteBook(ean);
+            } else if(!isConnected()){
+                Intent messageIntent = new Intent(MainActivity.MESSAGE_EVENT);
+                messageIntent.putExtra(MainActivity.MESSAGE_KEY,getResources().getString(R.string.no_network));
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_network),Toast.LENGTH_LONG).show();
             }
+
         }
+    }
+
+    private boolean isConnected(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return ((networkInfo != null) && networkInfo.isConnected());
     }
 
     /**
